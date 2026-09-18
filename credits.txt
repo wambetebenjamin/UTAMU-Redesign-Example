@@ -3,5 +3,6 @@ Jquery
 Bootstrap
 Font-awesome
 Google Maps
-Images : Pexels, Pixabay, Unsplash
-Goolgle fonts : Lato & Montserrat
+Photos: UTAMU official website (utamu.ac.ug) - homepage slider, campus, graduation,
+ICTM conference, moot court and partnership photos | Pexels, Pixabay, Unsplash (stock)
+Google fonts : Lato & Montserrat

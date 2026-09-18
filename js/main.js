@@ -126,3 +126,56 @@
 	});
 
 })(jQuery);
+
+	// UTAMU Home Hero Slider (replicates utamu.ac.ug homepage slider)
+	(function() {
+		var $slider = $('.hero-slider');
+		if (!$slider.length) { return; }
+
+		var $slides = $slider.find('.hero-slide');
+		var $dotsWrap = $slider.find('.slider-dots');
+		var current = 0;
+		var timer = null;
+		var INTERVAL = 6000;
+
+		if ($slides.length <= 1) { $dotsWrap.remove(); return; }
+
+		// Build navigation dots
+		$slides.each(function(i) {
+			var $dot = $('<span class="dot" role="button" aria-label="Go to slide ' + (i + 1) + '"></span>');
+			if (i === 0) { $dot.addClass('active'); }
+			$dot.on('click', function() { go(i); restart(); });
+			$dotsWrap.append($dot);
+		});
+
+		function go(i) {
+			$slides.eq(current).removeClass('active');
+			$dotsWrap.find('.dot').eq(current).removeClass('active');
+			current = (i + $slides.length) % $slides.length;
+			$slides.eq(current).addClass('active');
+			$dotsWrap.find('.dot').eq(current).addClass('active');
+		}
+
+		function restart() {
+			if (timer) { clearInterval(timer); }
+			timer = setInterval(function() { go(current + 1); }, INTERVAL);
+		}
+
+		// Pause auto-rotation while hovering
+		$slider.on('mouseenter', function() { if (timer) { clearInterval(timer); } });
+		$slider.on('mouseleave', restart);
+
+		// Touch swipe support
+		var startX = null;
+		$slider.on('touchstart', function(e) {
+			startX = e.originalEvent.touches[0].clientX;
+		});
+		$slider.on('touchend', function(e) {
+			if (startX === null) { return; }
+			var dx = e.originalEvent.changedTouches[0].clientX - startX;
+			if (Math.abs(dx) > 45) { go(current + (dx < 0 ? 1 : -1)); restart(); }
+			startX = null;
+		});
+
+		restart();
+	})();

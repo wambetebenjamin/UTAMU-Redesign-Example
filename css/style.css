@@ -1970,3 +1970,206 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 	font-size: 13px;
 	color: rgba(255,255,255,0.85);
 }
+
+/*------------------------------------*\
+	UTAMU Home Hero Slider
+	(replicates utamu.ac.ug homepage slider)
+\*------------------------------------*/
+.hero-slider {
+	overflow: hidden;
+}
+
+#home.hero-slider {
+	height: calc(100vh - 80px);
+	min-height: 540px;
+}
+
+.hero-slider .hero-slide {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	opacity: 0;
+	visibility: hidden;
+	-webkit-transition: opacity 0.9s ease, visibility 0.9s ease;
+	        transition: opacity 0.9s ease, visibility 0.9s ease;
+	z-index: 1;
+}
+
+.hero-slider .hero-slide.active {
+	opacity: 1;
+	visibility: visible;
+	z-index: 2;
+}
+
+.hero-slider .slide-content {
+	position: relative;
+	z-index: 3;
+	height: 100%;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	    -ms-flex-align: center;
+	        align-items: center;
+	padding-top: 100px;
+	padding-bottom: 70px;
+}
+
+.slide-badge {
+	display: inline-block;
+	margin-bottom: 15px;
+	padding: 6px 16px;
+	font-size: 12px;
+}
+
+.slide-title {
+	color: #FFF;
+	font-size: clamp(26px, 4.6vw, 42px);
+	font-weight: 800;
+	line-height: 1.2;
+	text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+	margin-top: 0;
+}
+
+.slide-text {
+	color: #FFF;
+	font-size: clamp(15px, 1.9vw, 20px);
+	font-weight: 400;
+	max-width: 720px;
+	margin-top: 15px;
+	margin-bottom: 25px;
+	text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+.slide-actions .main-button,
+.slide-actions .btn-outline-white,
+.slide-actions .blue-button {
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+
+.slider-dots {
+	position: absolute;
+	bottom: 25px;
+	left: 0;
+	right: 0;
+	text-align: center;
+	z-index: 5;
+}
+
+.slider-dots .dot {
+	display: inline-block;
+	width: 11px;
+	height: 11px;
+	border-radius: 50%;
+	margin: 0 5px;
+	background: rgba(255,255,255,0.45);
+	border: 1px solid rgba(255,255,255,0.9);
+	cursor: pointer;
+	-webkit-transition: 0.2s all;
+	        transition: 0.2s all;
+}
+
+.slider-dots .dot.active {
+	background: #ED1C24;
+	border-color: #ED1C24;
+	-webkit-transform: scale(1.15);
+	    -ms-transform: scale(1.15);
+	        transform: scale(1.15);
+}
+
+/*------------------------------------*\
+	UTAMU Responsive Hardening
+	(consistent behaviour on phones,
+	tablets, laptops and large screens)
+\*------------------------------------*/
+
+/* Fixed parallax backgrounds jank/break on touch devices */
+@media only screen and (max-width: 1024px) {
+	.bg-image.bg-parallax {
+		background-attachment: scroll;
+	}
+}
+
+/* Fluid media */
+iframe,
+video,
+embed,
+object {
+	max-width: 100%;
+}
+
+/* Tables: always scrollable instead of breaking the layout */
+.table-responsive {
+	min-height: 0.01%;
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+@media only screen and (max-width: 767px) {
+	#home.hero-slider {
+		min-height: 500px;
+	}
+
+	.hero-slider .slide-content {
+		padding-top: 110px;
+		padding-bottom: 90px;
+	}
+
+	.slide-text {
+		margin-bottom: 20px;
+	}
+
+	.slider-dots {
+		bottom: 12px;
+	}
+
+	.slider-dots .dot {
+		width: 9px;
+		height: 9px;
+		margin: 0 4px;
+	}
+
+	/* page heroes */
+	.hero-area {
+		padding-top: 60px;
+		padding-bottom: 60px;
+	}
+
+	/* long words / emails should never overflow */
+	h1, h2, h3, h4, h5, h6,
+	p, li, a, span, td, th, div {
+		overflow-wrap: break-word;
+		word-wrap: break-word;
+	}
+}
+
+@media only screen and (max-width: 480px) {
+	#home.hero-slider {
+		min-height: 460px;
+	}
+
+	.slide-title {
+		font-size: 26px;
+	}
+
+	/* stack hero buttons full-width on small phones */
+	.slide-actions .main-button,
+	.slide-actions .btn-outline-white,
+	.slide-actions .blue-button {
+		display: block;
+		width: 100%;
+		margin-right: 0;
+		text-align: center;
+	}
+
+	.hero-area h1 {
+		font-size: 26px;
+	}
+
+	.hero-area-tree li {
+		display: inline-block;
+	}
+}
