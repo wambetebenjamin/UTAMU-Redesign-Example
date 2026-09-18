@@ -230,7 +230,7 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 	max-height:30px;
 }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 991px) {
 	.navbar-brand {
 		margin-left:15px;
 	}
@@ -254,6 +254,18 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 #header.transparent-nav {
 	position:absolute;
 	background-color: transparent;
+}
+
+/* Keep the overlaid home navigation clear of the utility top bar */
+/* (the offset is re-synced in js/main.js when the bar wraps on tablets) */
+@media (min-width: 768px) {
+	.top-bar {
+		min-height: 54px;
+	}
+
+	#header.transparent-nav {
+		top: 54px;
+	}
 }
 
 #header.transparent-nav .main-menu li a {
@@ -292,14 +304,19 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 }
 
 /* -- Mobile Nav -- */
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 991px) {
 	#nav {
 		position: fixed;
 		top: 0;
 		right: 0;
 		width: 0%;
-		max-width:250px;
+		max-width:280px;
+		height: 100%;
 		height: 100vh;
+		overflow-y: auto;
+		overflow-x: hidden;
+		-webkit-overflow-scrolling: touch;
+		overscroll-behavior: contain;
 		background: #FFF;
 		-webkit-box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.1);
 		        box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.1);
@@ -320,14 +337,54 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 		        transform: translateX(0%);
 	}
 	
+	/* The panel is a single column: undo Bootstrap's floats */
 	.main-menu {
 		margin:0;
+		float: none;
+		width: 100%;
 	}
-	
-	.main-menu li a {
+
+	.main-menu > li {
+		float: none;
+		width: 100%;
+	}
+
+	.main-menu > li > a {
 		color: #374050 !important;
-		display: inline-block;
+		display: block;
 		margin-left: 40px;
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+
+	.main-menu li.open > a {
+		color: #ED1C24 !important;
+	}
+
+	.main-menu .dropdown-menu {
+		position: static !important;
+		float: none;
+		width: auto;
+		min-width: 0;
+		box-shadow: none;
+		border: none;
+		background: #F8FAFC;
+		padding: 6px 0;
+		margin-left: 20px;
+	}
+
+	.main-menu .dropdown-menu > li > a {
+		margin-left: 0;
+		padding: 10px 15px;
+		white-space: normal;
+	}
+
+}
+
+/* Roomier slide-out panel on tablets */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+	#nav {
+		max-width: 340px;
 	}
 }
 
@@ -335,10 +392,15 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 .navbar-toggle {
 	position:fixed;
 	right:0;
+	top:5px;
 	padding: 0;
-	height: 40px;
-	width: 40px;
-	margin-top: 5px;
+	height: 42px;
+	width: 42px;
+	display: none;
+	background: rgba(255,255,255,0.95);
+	border: 1px solid rgba(55,64,80,0.12);
+	border-radius: 8px;
+	box-shadow: 0 2px 10px rgba(15,23,42,0.14);
 	z-index:99;
 }
 
@@ -393,6 +455,19 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
             transform: translateY(-10px) rotate(-45deg);
 }
 
+/* Toggle sits below the utility top bar while it is visible (tablet widths) */
+@media only screen and (min-width: 768px) {
+	.navbar-toggle {
+		top: 62px;
+	}
+}
+
+@media only screen and (max-width: 991px) {
+	.navbar-toggle {
+		display: block;
+	}
+}
+
 /*------------------------------------*\
 	Hero Area
 \*------------------------------------*/
@@ -403,19 +478,28 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 }
 
 #home.hero-area {
-	height:calc(100vh - 80px);
-	padding-top: 0px;
-	padding-bottom: 0px;
+	min-height:calc(100vh - 80px);
+	min-height:calc(100svh - 80px);
+	display:-webkit-box;
+	display:-ms-flexbox;
+	display:flex;
+	-webkit-box-align:center;
+	    -ms-flex-align:center;
+	        align-items:center;
+	padding-top: 120px;
+	padding-bottom: 70px;
 }
 
+/* Content flows and grows instead of being clipped on short screens */
 .home-wrapper {
-	position:absolute;
-	top:50%;
-	-webkit-transform:translateY(-50%);
-	    -ms-transform:translateY(-50%);
-	        transform:translateY(-50%);
-	left:0;
-	right:0;
+	position:relative;
+	top:auto;
+	left:auto;
+	right:auto;
+	width:100%;
+	-webkit-transform:none;
+	    -ms-transform:none;
+	        transform:none;
 }
 
 /* -- Breadcrumb -- */
@@ -613,7 +697,8 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 
 .course .course-title {
 	display:block;
-	height:42px;
+	min-height:42px;
+	line-height:1.4;
 }
 
 .course .course-details {
@@ -1424,7 +1509,7 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 	display: none !important;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 992px) {
 	.main-menu li.dropdown:hover > .dropdown-menu {
 		display: block;
 		-webkit-animation: fadeIn 0.2s ease-in-out;
@@ -1442,17 +1527,22 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 	to { opacity: 1; transform: translateY(0); }
 }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 991px) {
 	.main-menu .dropdown-menu {
-		position: static !important;
-		float: none;
-		box-shadow: none;
-		border: none;
-		padding-left: 20px;
 		display: none;
 	}
 	.main-menu li.open .dropdown-menu {
 		display: block !important;
+	}
+	/* Collapsed dropdowns only reveal their sub-pages when opened */
+	.main-menu li.open > a:after {
+		-webkit-transform: rotate(180deg);
+		    -ms-transform: rotate(180deg);
+		        transform: rotate(180deg);
+	}
+	.main-menu li.dropdown > a:after {
+		-webkit-transition: 0.2s -webkit-transform;
+		transition: 0.2s transform, 0.2s -webkit-transform;
 	}
 }
 
@@ -1969,4 +2059,434 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 	margin: 0;
 	font-size: 13px;
 	color: rgba(255,255,255,0.85);
+}
+
+/*------------------------------------*\
+	Responsive Refinements
+\*------------------------------------*/
+/* --- Fluid media & long words --- */
+img, svg, video, canvas {
+	max-width: 100%;
+}
+
+body {
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+}
+
+/* --- Home hero content --- */
+.hero-title {
+	font-size: 42px;
+	font-weight: 800;
+	line-height: 1.2;
+	margin-top: 0;
+	text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.hero-lead {
+	font-size: 20px;
+	font-weight: 400;
+	max-width: 720px;
+	margin-top: 15px;
+	margin-bottom: 25px;
+}
+
+.hero-cta > a {
+	margin-bottom: 10px;
+}
+
+/* Pin the mobile toggle / CTA buttons in place of inline offsets */
+.btn-outline-red, .btn-outline-blue, .btn-outline-white, .blue-button, .main-button {
+	max-width: 100%;
+}
+
+/* -- Off-canvas menu backdrop -- */
+/* Declared after the legacy nav rules so #header.transparent-nav:after cannot win */
+#header.nav-collapse:after {
+	content: "";
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(15,23,42,0.5);
+	z-index: 8;
+	-webkit-animation: fadeIn 0.2s ease-in-out;
+	animation: fadeIn 0.2s ease-in-out;
+}
+
+body.nav-open {
+	overflow: hidden;
+}
+
+/* --- Large desktops: use the extra width --- */
+@media only screen and (min-width: 1400px) {
+	.container {
+		width: 1290px;
+		max-width: 100%;
+	}
+}
+
+/* --- Small laptops and below --- */
+@media only screen and (max-width: 1199px) {
+	.section {
+		padding-top: 60px;
+		padding-bottom: 60px;
+	}
+
+	.section-hr {
+		margin-top: 60px;
+		margin-bottom: 60px;
+	}
+}
+
+/* --- Keep the utility bar on a single line below large desktops --- */
+@media only screen and (min-width: 768px) and (max-width: 1439px) {
+	.top-bar a {
+		font-size: 12px;
+		margin-right: 10px;
+	}
+
+	.top-bar .top-links a + a:before {
+		margin-right: 10px;
+	}
+}
+
+@media only screen and (min-width: 768px) {
+	/* Flex row lets the utility links stay on one line and the
+	   contact details wrap instead of squeezing the whole bar */
+	.top-bar .row {
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-align: center;
+		    -ms-flex-align: center;
+		        align-items: center;
+		-webkit-box-pack: justify;
+		    -ms-flex-pack: justify;
+		        justify-content: space-between;
+	}
+
+	.top-bar .row > div {
+		float: none;
+		width: auto;
+		-webkit-box-flex: 0;
+		    -ms-flex: 0 0 auto;
+		        flex: 0 0 auto;
+	}
+
+	.top-bar .top-links {
+		white-space: nowrap;
+		margin-left: auto;
+	}
+
+	.top-bar .row {
+		-ms-flex-wrap: wrap;
+		    flex-wrap: wrap;
+	}
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+	.top-bar .top-links a i {
+		display: none;
+	}
+}
+
+/* Tablets: trim the utility strip so both halves stay on one line */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+	.top-bar .top-contact i {
+		display: none;
+	}
+
+	.top-bar .top-contact {
+		margin-right: 8px;
+	}
+
+	.top-bar a {
+		font-size: 11.5px;
+		margin-right: 7px;
+	}
+
+	.top-bar .top-links a + a:before {
+		margin-right: 7px;
+	}
+}
+
+/* --- Compact desktop bar: keep the menu beside the logo --- */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+	.main-menu li a {
+		font-size: 12.5px;
+		letter-spacing: 0;
+		padding-left: 9px;
+		padding-right: 9px;
+	}
+
+	.navbar-brand .logo > img {
+		max-height: 26px;
+	}
+}
+
+/* --- Tablets and below (<= 991px) --- */
+@media only screen and (max-width: 991px) {
+	/* Fixed backgrounds are unreliable (and jumpy) on touch devices */
+	.bg-image.bg-parallax {
+		background-attachment: scroll;
+	}
+
+	.hero-area {
+		padding-top: 60px;
+		padding-bottom: 60px;
+	}
+
+	/* Leave room for the overlaid header on the home hero */
+	#home.hero-area {
+		padding-top: 110px;
+		padding-bottom: 60px;
+	}
+
+	.hero-title {
+		font-size: 34px;
+	}
+
+	.hero-lead {
+		font-size: 18px;
+	}
+
+	.utamu-table th,
+	.utamu-table td {
+		padding: 10px 12px;
+	}
+
+	.top-bar .top-contact {
+		margin-right: 12px;
+	}
+
+	.top-bar a {
+		margin-right: 10px;
+	}
+}
+
+/* --- Phones (<= 767px) --- */
+@media only screen and (max-width: 767px) {
+	body {
+		font-size: 14.5px;
+	}
+
+	.section {
+		padding-top: 45px;
+		padding-bottom: 45px;
+	}
+
+	.section-hr {
+		margin-top: 45px;
+		margin-bottom: 45px;
+	}
+
+	.section-header {
+		margin-bottom: 25px;
+	}
+
+	.section-header h2 {
+		font-size: 22px;
+	}
+
+	.lead {
+		font-size: 16.5px;
+	}
+
+	/* Page headers */
+	.hero-area {
+		padding-top: 45px;
+		padding-bottom: 45px;
+	}
+
+	.hero-area h1 {
+		font-size: 26px;
+		line-height: 1.3;
+		margin-top: 8px;
+	}
+
+	#home.hero-area {
+		padding-top: 95px;
+		padding-bottom: 55px;
+	}
+
+	.hero-title {
+		font-size: 27px;
+	}
+
+	.hero-lead {
+		font-size: 16px;
+		margin-bottom: 20px;
+	}
+
+	/* Stacked hero actions for comfortable tapping */
+	.hero-cta > a {
+		display: block;
+		width: 100%;
+		text-align: center;
+		margin-right: 0 !important;
+	}
+
+	/* Buttons */
+	.main-button, .btn-outline-red, .btn-outline-blue, .btn-outline-white, .blue-button {
+		padding: 9px 22px;
+		font-size: 13.5px;
+	}
+
+	/* Tables scroll horizontally instead of squeezing every cell */
+	.table-responsive {
+		-webkit-overflow-scrolling: touch;
+	}
+
+	.table-responsive > .utamu-table {
+		min-width: 480px;
+	}
+
+	.quick-info-strip {
+		margin-top: -30px;
+		padding: 15px 0;
+	}
+
+	.quick-info-item {
+		padding: 8px 15px;
+	}
+
+	.quick-info-item i {
+		font-size: 26px;
+		margin-right: 12px;
+	}
+
+	.notice-banner {
+		padding: 15px 18px;
+	}
+
+	.notice-banner h5 {
+		font-size: 15px;
+	}
+
+	.filter-nav {
+		margin-bottom: 25px;
+	}
+
+	.filter-nav button {
+		padding: 7px 15px;
+		font-size: 12.5px;
+		margin: 3px;
+	}
+
+	.stat-box {
+		padding: 22px 16px;
+	}
+
+	.stat-box i {
+		font-size: 30px;
+	}
+
+	.stat-box .stat-number {
+		font-size: 30px;
+	}
+
+	.programme-meta {
+		-webkit-box-orient: vertical;
+		-webkit-box-direction: normal;
+		    -ms-flex-direction: column;
+		        flex-direction: column;
+		-webkit-box-align: start;
+		    -ms-flex-align: start;
+		        align-items: flex-start;
+	}
+
+	.programme-meta .tuition {
+		margin-top: 4px;
+	}
+
+	.person-card .person-img {
+		height: 230px;
+	}
+
+	.panel-utamu .panel-title > a {
+		font-size: 14.5px;
+	}
+
+	.panel-utamu .panel-title > a:after {
+		margin-left: 12px;
+	}
+
+	.footer-copyright {
+		font-size: 12.5px;
+	}
+
+	#preloader {
+		background-size: 60px;
+	}
+}
+
+/* --- Small phones (<= 480px) --- */
+@media only screen and (max-width: 480px) {
+	.section {
+		padding-top: 38px;
+		padding-bottom: 38px;
+	}
+
+	.hero-area h1 {
+		font-size: 23px;
+	}
+
+	.hero-title {
+		font-size: 24px;
+	}
+
+	.hero-lead {
+		font-size: 15px;
+	}
+
+	.hero-area-tree li {
+		font-size: 11.5px;
+	}
+
+	.table-responsive > .utamu-table {
+		min-width: 440px;
+	}
+
+	.utamu-table th,
+	.utamu-table td {
+		font-size: 12.5px;
+		padding: 9px 10px;
+	}
+
+	.filter-nav button {
+		padding: 6px 12px;
+		font-size: 12px;
+	}
+
+	.stat-box .stat-number {
+		font-size: 27px;
+	}
+
+	.quick-info-item i {
+		font-size: 23px;
+	}
+
+	.quick-info-item h5 {
+		font-size: 15px;
+	}
+
+	.person-card .person-img {
+		height: 260px;
+	}
+
+	.panel-utamu .panel-heading {
+		padding: 12px 15px;
+	}
+
+	.panel-utamu .panel-body {
+		padding: 15px;
+		font-size: 13.5px;
+	}
+
+	.badge-utamu {
+		font-size: 10px;
+		letter-spacing: 0.3px;
+	}
 }
