@@ -6,20 +6,55 @@
 		$("#preloader").delay(400).fadeOut();
 	});
 
+	// Breakpoint at which the menu switches between the panel and the nav bar
+	var NAV_BREAKPOINT = 992;
+
+	function closeNav() {
+		$('#header').removeClass('nav-collapse');
+		$('body').removeClass('nav-open');
+	}
+
 	// Mobile Toggle Btn
 	$('.navbar-toggle').on('click', function(e) {
 		e.preventDefault();
-		$('#header').toggleClass('nav-collapse');
+		var isOpen = $('#header').toggleClass('nav-collapse').hasClass('nav-collapse');
+		$('body').toggleClass('nav-open', isOpen);
 	});
 
-	// Mobile Dropdown Click Handler
-	$('.main-menu li.dropdown > a').on('click', function(e) {
-		if ($(window).width() < 768) {
-			e.preventDefault();
-			$(this).parent('li').toggleClass('open');
-			$(this).next('.dropdown-menu').slideToggle(200);
+	// Close the panel when the backdrop (or the header bar itself) is tapped
+	$('#header').on('click', function(e) {
+		if (e.target === this) {
+			closeNav();
 		}
 	});
+
+	// Close the panel on Escape
+	$(document).on('keyup', function(e) {
+		if (e.key === 'Escape' || e.keyCode === 27) {
+			closeNav();
+		}
+	});
+
+	// Follow the navigation without leaving the panel hanging open
+	// (dropdown toggles expand in place instead of navigating)
+	$('#nav a').on('click', function() {
+		if ($(this).hasClass('dropdown-toggle') || $(this).attr('href') === '#') {
+			return;
+		}
+		closeNav();
+	});
+
+	// Reset the panel state when resizing up to the desktop navigation
+	$(window).on('resize', function() {
+		if ($(window).width() >= NAV_BREAKPOINT) {
+			closeNav();
+			$('.main-menu li.dropdown').removeClass('open').children('.dropdown-menu').removeAttr('style');
+		}
+	});
+
+	// The dropdowns themselves are toggled by Bootstrap's data-api
+	// (data-toggle="dropdown"); the stylesheet renders them inline inside
+	// the slide-out panel so no extra click handling is needed here.
 
 	// Interactive Course/Program Search & Filtering
 	$('#programme-search-input').on('keyup', function() {
@@ -59,6 +94,22 @@
 				'</div>');
 		}, 800);
 	});
+
+	// Keep the overlaid home header aligned with the utility bar
+	// (the bar stacks onto two lines on tablet widths)
+	function syncHeaderOffset() {
+		var $bar = $('.top-bar'),
+			$header = $('#header.transparent-nav');
+
+		if (!$bar.length || !$header.length || $bar.css('display') === 'none') {
+			return;
+		}
+
+		$header.css('top', $bar.outerHeight() + 'px');
+	}
+
+	$(window).on('load resize', syncHeaderOffset);
+	$(syncHeaderOffset);
 
 	// Program Category Dynamic Selector in Modal/Form
 	$('#prog-category').on('change', function() {
