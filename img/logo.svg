@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 90" width="420" height="90">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="1" stdDeviation="1" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <!-- Icon Mark -->
+  <g transform="translate(10, 5)">
+    <!-- Red Oval Outer Ring -->
+    <ellipse cx="40" cy="40" rx="36" ry="38" fill="none" stroke="#ED1C24" stroke-width="3"/>
+    
+    <!-- Red Torch Rays / Flames -->
+    <path d="M 40,15 C 38,25 35,35 34,48 C 36,46 40,46 40,48 C 40,46 44,46 46,48 C 45,35 42,25 40,15 Z" fill="#ED1C24"/>
+    <path d="M 31,19 C 27,27 26,38 28,49 C 30,48 33,48 34,49 C 32,38 31,27 31,19 Z" fill="#ED1C24"/>
+    <path d="M 49,19 C 53,27 54,38 52,49 C 50,48 47,48 46,49 C 48,38 49,27 49,19 Z" fill="#ED1C24"/>
+    <path d="M 23,26 C 20,33 20,42 22,51 C 24,50 26,51 27,52 C 24,43 23,34 23,26 Z" fill="#ED1C24"/>
+    <path d="M 57,26 C 60,33 60,42 58,51 C 56,50 54,51 53,52 C 56,43 57,34 57,26 Z" fill="#ED1C24"/>
+
+    <!-- Blue Open Book -->
+    <!-- Left Page -->
+    <path d="M 40,57 C 28,51 14,55 10,57 C 12,50 25,44 40,51 Z" fill="#005AAB"/>
+    <path d="M 40,63 C 28,57 14,61 10,63 C 12,56 25,50 40,57 Z" fill="#005AAB"/>
+    <path d="M 40,68 C 28,62 14,66 10,68 C 12,61 25,55 40,62 Z" fill="#004080"/>
+    <!-- Right Page -->
+    <path d="M 40,57 C 52,51 66,55 70,57 C 68,50 55,44 40,51 Z" fill="#005AAB"/>
+    <path d="M 40,63 C 52,57 66,61 70,63 C 68,56 55,50 40,57 Z" fill="#005AAB"/>
+    <path d="M 40,68 C 52,62 66,66 70,68 C 68,61 55,55 40,62 Z" fill="#004080"/>
+  </g>
+  
+  <!-- Text on White/Light Header -->
+  <g transform="translate(95, 0)">
+    <text x="0" y="44" font-family="'Montserrat', 'Arial Black', sans-serif" font-weight="900" font-size="36" fill="#ED1C24" letter-spacing="2">UTAMU</text>
+    <text x="2" y="60" font-family="'Lato', 'Segoe UI', sans-serif" font-weight="700" font-size="10.5" fill="#005AAB" letter-spacing="1">UNIVERSAL TECHNOLOGY &amp; MANAGEMENT UNIVERSITY</text>
+    <text x="2" y="74" font-family="'Georgia', serif" font-style="italic" font-weight="600" font-size="11.5" fill="#666666" letter-spacing="0.5">"For an Open Mind"</text>
+  </g>
+</svg>
